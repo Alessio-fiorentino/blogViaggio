@@ -20,9 +20,17 @@ namespace Blog.Web2.Controllers
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Post.ToListAsync());
+            var city = from m in _context.Post
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                city = city.Where(s => s.Titolo.Contains(searchString));
+            }
+
+            return View(await city.ToListAsync());
         }
 
         // GET: Posts/Details/5
