@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Blog.Web2.Models.Post>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cerca una esperienza di viaggio</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Città
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Periodo)
+            </th>
+            <th>
+                Descrizione
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titolo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Periodo)
+            </td>
+            
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+             
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
