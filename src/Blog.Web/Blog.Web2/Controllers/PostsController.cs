@@ -62,7 +62,7 @@ namespace Blog.Web2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titolo,Periodo,Contenuto")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,Titolo,Periodo,Contenuto,Consigliato,Sconsigliato")] Post post)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Blog.Web2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titolo,Periodo,Contenuto")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titolo,Periodo,Contenuto,Consigliato,Sconsigliato")] Post post)
         {
             if (id != post.Id)
             {

@@ -10,23 +10,35 @@
     <h4>Post</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Città
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Titolo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Periodo)
+        <dt class="col-sm-2">
+            Data
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Periodo)
         </dd>
-        <dt class = "col-sm-2">
-           Descrizione
+        <dt class="col-sm-2">
+            Descrizione
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Contenuto)
+        </dd>
+        <dt class="col-sm-2">
+            Consigliato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Consigliato)
+        </dd>
+        <dt class="col-sm-2">
+            Sconsigliato
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sconsigliato)
         </dd>
     </dl>
 </div>

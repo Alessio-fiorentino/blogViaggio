@@ -13,23 +13,38 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Titolo" class="control-label"></label>
+                <p> Città</p>
                 <input asp-for="Titolo" class="form-control" />
                 <span asp-validation-for="Titolo" class="text-danger"></span>
+
             </div>
             <div class="form-group">
-                <label asp-for="Periodo" class="control-label"></label>
+                <p>Data</p>
                 <input asp-for="Periodo" class="form-control" />
                 <span asp-validation-for="Periodo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contenuto" class="control-label"></label>
-                <input asp-for="Contenuto" class="form-control" />
+
+                <p>Descrizione</p>
+                @Html.TextAreaFor(m => m.Contenuto, new { @class = "form-control", @cols = "6", @rows = "10" })
                 <span asp-validation-for="Contenuto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p>Consiglia qualcosa inerente alla tua esperienza</p>
+                @Html.TextAreaFor(m => m.Consigliato, new { @class = "form-control", @cols = "6", @rows = "5" })
+
+                <span asp-validation-for="Consigliato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p>Hai qualcosa da sconsigliare inerente alla tua esperienza di viaggio</p>
+                @Html.TextAreaFor(m => m.Sconsigliato, new { @class = "form-control", @cols = "6", @rows = "5" })
+
+                <span asp-validation-for="Sconsigliato" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
 </div>
