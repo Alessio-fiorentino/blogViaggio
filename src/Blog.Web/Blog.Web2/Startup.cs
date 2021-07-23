@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Blog.Web2.Data;
+using Raven.DependencyInjection;
 
 namespace Blog.Web2
 {
@@ -25,11 +26,13 @@ namespace Blog.Web2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            // 1. Add an IDocumentStore singleton. Make sure that RavenSettings section exist in appsettings.json
+            services.AddRavenDbDocStore();
 
-            services.AddDbContext<BlogWeb2Context>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("BlogWeb2Context")));
+            // 2. Add a scoped IAsyncDocumentSession. For the sync version, use .AddRavenSession().
+            services.AddRavenDbAsyncSession();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
