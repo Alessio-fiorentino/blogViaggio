@@ -28,20 +28,36 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Contenuto)
         </dd>
-        <dt class="col-sm-2">
-            Consigliato
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Consigliato)
-        </dd>
-        <dt class="col-sm-2">
-            Sconsigliato
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sconsigliato)
-        </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Index">Back to List</a>
+<div style="text-align:center">
+    <table align="center" cellpadding="20px" style="width:400px">
+        <thead>
+            <tr>
+                <th style="background-color:lawngreen">
+                    Consigliato
+                </th>
+                <th style="background-color:red">
+                    Sconsigliato
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color:lawngreen">
+                    @Html.DisplayFor(model => model.Consigliato)
+                </td>
+                <td style="background-color:red">
+                    @Html.DisplayFor(model => model.Sconsigliato)
+                </td>
+                </tr>
+            </tbody>
+        </table>
 </div>
+<br />
+<br />
+<br />
+<p><a asp-action="Index">Back to List</a></p>
+
