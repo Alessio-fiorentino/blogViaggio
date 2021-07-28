@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Blog.Web2.Data;
 using Raven.DependencyInjection;
+using Blog.Web2.Models;
 
 namespace Blog.Web2
 {
@@ -31,6 +32,9 @@ namespace Blog.Web2
 
             // 2. Add a scoped IAsyncDocumentSession. For the sync version, use .AddRavenSession().
             services.AddRavenDbAsyncSession();
+            services.AddScoped<OrderService>();
+
+            services.AddRazorPages();
         }
 
 
