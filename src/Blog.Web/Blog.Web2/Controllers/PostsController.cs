@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Web2.Data;
 using Blog.Web2.Models;
+using PagedList;
+
 
 namespace Blog.Web2.Controllers
 {
@@ -20,8 +22,20 @@ namespace Blog.Web2.Controllers
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString,int? page,string currentFilter)
         {
+            ViewBag.CurrentSort = searchString;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
             var city = from m in _context.Post
                          select m;
 
@@ -31,6 +45,10 @@ namespace Blog.Web2.Controllers
             }
 
             return View(await city.ToListAsync());
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(city.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Posts/Details/5

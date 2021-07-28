@@ -1,15 +1,22 @@
-﻿@model IEnumerable<Blog.Web2.Models.Post>
-
+﻿
+@model PagedList.IPagedList<Blog.Web2.Models.Post>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Index";
 }
+
 
 <h1>Cerca una esperienza di viaggio</h1>
 <form asp-controller="Posts" asp-action="Index" method="get">
-    <p>
-        Città: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
+    @using (Html.BeginForm("Index", "Index", FormMethod.Get))
+    {
+        <p>
+            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            Città: <input type="text" name="SearchString" />
+            <input type="submit" value="Filter" />
+        </p>
+    }
 </form>
 
 <table class="table">
@@ -19,27 +26,33 @@
                 Città
             </th>
             <th>
-               Data
+                Data
             </th>
-           
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titolo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Periodo)
-            </td>
-            
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-             
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titolo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Periodo)
+                </td>
+
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+
