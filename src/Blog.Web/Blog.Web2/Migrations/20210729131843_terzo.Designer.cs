@@ -4,14 +4,16 @@ using Blog.Web2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Blog.Web2.Migrations
 {
     [DbContext(typeof(BlogWeb2Context))]
-    partial class BlogWeb2ContextModelSnapshot : ModelSnapshot
+    [Migration("20210729131843_terzo")]
+    partial class terzo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

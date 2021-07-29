@@ -22,9 +22,11 @@ namespace Blog.Web2.Controllers
         }
 
         // GET: Posts
-        public async Task<IActionResult> Index(string searchString,int? page,string currentFilter)
+        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            ViewBag.CurrentSort = searchString;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
             if (searchString != null)
             {
@@ -36,15 +38,28 @@ namespace Blog.Web2.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            var city = from m in _context.Post
-                         select m;
 
+            var city = from s in _context.Post
+                           select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 city = city.Where(s => s.Titolo.Contains(searchString));
             }
-
-            return View(await city.ToListAsync());
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    city = city.OrderByDescending(s => s.Titolo);
+                    break;
+                case "Date":
+                    city = city.OrderBy(s => s.Periodo);
+                    break;
+                case "date_desc":
+                    city = city.OrderByDescending(s => s.Periodo);
+                    break;
+                default:  // Name ascending 
+                    city = city.OrderBy(s => s.Titolo);
+                    break;
+            }
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);

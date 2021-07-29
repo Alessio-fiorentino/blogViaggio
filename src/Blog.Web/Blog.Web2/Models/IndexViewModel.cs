@@ -8,11 +8,18 @@ namespace Blog.Web2.Models
 {
     public class IndexViewModel
     {
-        public string Citta { get; set; }
+        public int Id { get; set; }
+        [Required(ErrorMessage = "Il campo è obbligatorio")]
+
+        public string Titolo { get; set; }
 
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Il campo è obbligatorio")]
         public DateTime Periodo { get; set; }
-        public string Descrizione { get; set; }
 
+        [Required(ErrorMessage = "Il campo è obbligatorio")]
+        public string Contenuto { get; set; }
+        public string Consigliato { get; set; }
+        public string Sconsigliato { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿
-@model PagedList.IPagedList<Blog.Web2.Models.Post>
+﻿@model PagedList.IPagedList<Blog.Web2.Models.Post>
 @using PagedList.Mvc;
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
@@ -9,14 +9,12 @@
 
 <h1>Cerca una esperienza di viaggio</h1>
 <form asp-controller="Posts" asp-action="Index" method="get">
-    @using (Html.BeginForm("Index", "Index", FormMethod.Get))
-    {
+
         <p>
-            Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            Città: <input type="text" name="SearchString" />
-            <input type="submit" value="Filter" />
+            Cerca: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            <input type="submit" value="Search" />
         </p>
-    }
+    
 </form>
 
 <table class="table">
@@ -54,5 +52,3 @@
 <br />
 
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-
