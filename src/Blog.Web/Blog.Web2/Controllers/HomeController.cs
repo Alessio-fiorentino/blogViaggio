@@ -25,7 +25,13 @@ namespace Blog.Web2.Controllers
 
             return View(model);
         }
+        public IActionResult Index1()
+        {
+            var model = new IndexViewModel();
 
+
+            return View(model);
+        }
         public IActionResult Privacy()
         {
             return View();

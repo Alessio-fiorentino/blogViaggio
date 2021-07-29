@@ -149,7 +149,7 @@ namespace Blog.Web2.Models
         public Task<int> GetOrderCount()
         {
             return this.dbSession
-                .Query<Order>()
+                .Query<Employee>()
                 .CountAsync();
         }
 

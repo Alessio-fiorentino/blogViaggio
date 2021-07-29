@@ -1,8 +1,9 @@
-﻿@page
-@model Blog.Web2.Models.IndexViewModel
+﻿@model Blog.Web2.Models.IndexViewModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Prova";
 }
+<h1>@ViewData["Title"]</h1>
+
 @inject OrderService orderSvc
 
 <div class="text-center">
@@ -11,7 +12,7 @@
             Welcome to RavenDB Dependency Injection
         </h1>
         <p class="lead">
-            Here is some sample data loaded from the database: 
+            Here is some sample data loaded from the database:
             <br />
             There are <strong>@await orderSvc.GetOrderCount()</strong> orders in the database 😎
         </p>
