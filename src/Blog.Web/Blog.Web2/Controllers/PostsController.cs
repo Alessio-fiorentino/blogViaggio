@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog.Web2.Data;
 using Blog.Web2.Models;
-using PagedList;
 
 
 namespace Blog.Web2.Controllers
@@ -21,51 +20,52 @@ namespace Blog.Web2.Controllers
             _context = context;
         }
 
-        // GET: Posts
-        public ViewResult Index(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+       public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
+{
+    ViewData["CurrentSort"] = sortOrder;
+    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+    if (searchString != null)
+    {
+        pageNumber = 1;
+    }
+    else
+    {
+        searchString = currentFilter;
+    }
 
-            ViewBag.CurrentFilter = searchString;
+    ViewData["CurrentFilter"] = searchString;
 
-            var city = from s in _context.Post
-                           select s;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                city = city.Where(s => s.Titolo.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    city = city.OrderByDescending(s => s.Titolo);
-                    break;
-                case "Date":
-                    city = city.OrderBy(s => s.Periodo);
-                    break;
-                case "date_desc":
-                    city = city.OrderByDescending(s => s.Periodo);
-                    break;
-                default:  // Name ascending 
-                    city = city.OrderBy(s => s.Titolo);
-                    break;
-            }
+    var city = from s in _context.Post
+                   select s;
+    if (!String.IsNullOrEmpty(searchString))
+    {
+        city = city.Where(s => s.Titolo.Contains(searchString) );
+    }
+    switch (sortOrder)
+    {
+        case "name_desc":
+            city = city.OrderByDescending(s => s.Titolo);
+            break;
+        case "Date":
+            city = city.OrderBy(s => s.Periodo);
+            break;
+        case "date_desc":
+            city = city.OrderByDescending(s => s.Periodo);
+            break;
+        default:
+            city = city.OrderBy(s => s.Titolo);
+            break;
+    }
 
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(city.ToPagedList(pageNumber, pageSize));
-        }
-
+    int pageSize = 3;
+    return View(await PaginatedList<Post>.CreateAsync(city.AsNoTracking(), pageNumber ?? 1, pageSize));
+}
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
