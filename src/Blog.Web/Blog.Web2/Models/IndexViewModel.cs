@@ -6,11 +6,28 @@ using System.Threading.Tasks;
 using static Blog.Web2.Models.IndexViewModel;
 using Raven.Client.Documents.Session;
 using Raven.Client.Documents;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Web2.Models
 {
     public class IndexViewModel
     {
+        public class Città
+        {
+            public string Id { get; set; }
+            [Required(ErrorMessage = "Il campo è obbligatorio")]
+            public string Nome { get; set; }
+
+            [DataType(DataType.Date)]
+            [Required(ErrorMessage = "Il campo è obbligatorio")]
+            public DateTime Data { get; set; }
+            public string Descrizione { get; set; }
+        }
+
+
+
+
+
         public class Company
         {
             public string Id { get; set; }
@@ -136,6 +153,8 @@ namespace Blog.Web2.Models
             public string Name { get; set; }
             public string Phone { get; set; }
         }
+
+
     }
     public class OrderService
     {
@@ -149,9 +168,10 @@ namespace Blog.Web2.Models
         public Task<int> GetOrderCount()
         {
             return this.dbSession
-                .Query<Employee>()
+                .Query<Order>()
                 .CountAsync();
         }
 
     }
+   
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using static Blog.Web2.Models.IndexViewModel;
 
 namespace Blog.Web2.Controllers
 {
@@ -25,7 +26,7 @@ namespace Blog.Web2.Controllers
 
             return View(model);
         }
-        public IActionResult Index1()
+        public IActionResult CreateRaven()
         {
             var model = new IndexViewModel();
 
@@ -34,7 +35,8 @@ namespace Blog.Web2.Controllers
         }
         public IActionResult Privacy()
         {
-            return View();
+            var modelRaven = new ravendb();
+            return View(modelRaven);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -42,5 +44,7 @@ namespace Blog.Web2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+       
     }
 }

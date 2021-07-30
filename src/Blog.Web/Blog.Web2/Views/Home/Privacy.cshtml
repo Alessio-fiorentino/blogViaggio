@@ -1,10 +1,11 @@
-﻿@model Blog.Web2.Models.IndexViewModel
+﻿@model Blog.Web2.Models.ravendb
 @{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-@inject OrderService orderSvc
+
+@inject CittaService ser
 
 <div class="text-center">
     <div class="jumbotron">
@@ -14,7 +15,8 @@
         <p class="lead">
             Here is some sample data loaded from the database:
             <br />
-            There are <strong>@await orderSvc.GetOrderCount()</strong> orders in the database 😎
+            
+            There are <strong>@await ser.GetCittaCount()</strong> orders in the database 😎
         </p>
         <hr class="my-4">
         <p>Setting up Raven dependency injection takes only 2 lines of code.</p>
