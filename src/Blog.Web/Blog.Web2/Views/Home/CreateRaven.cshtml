@@ -1,24 +1,57 @@
-﻿@model Blog.Web2.Models.IndexViewModel
-@{
-    ViewData["Title"] = "Prova";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@model Blog.Web2.Models.ViaggioRavendb
 
-@inject OrderService orderSvc
 
-<div class="text-center">
-    <div class="jumbotron">
-        <h1 class="display-4">
-            Welcome to RavenDB Dependency Injection
-        </h1>
-        <p class="lead">
-            Here is some sample data loaded from the database:
-            <br />
-            There are <strong>@await orderSvc.GetOrderCount()</strong> orders in the database 😎
-        </p>
-        <hr class="my-4">
-        <p>Setting up Raven dependency injection takes only 2 lines of code.</p>
-        <a class="btn btn-primary btn-lg" href="https://github.com/JudahGabriel/RavenDB.Dependencyinjection#usage" role="button">Learn more</a>
+<h1>Create</h1>
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateRaven">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <p> Città</p>
+                <input asp-for="Citta" class="form-control" />
+                <span asp-validation-for="Citta" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <p>Data</p>
+                <input asp-for="Periodo" class="form-control" />
+                <span asp-validation-for="Periodo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <p>Descrizione</p>
+                @Html.TextAreaFor(m => m.Descrizione, new { @class = "form-control", @cols = "6", @rows = "10" })
+                <span asp-validation-for="Descrizione" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p>Consiglia qualcosa inerente alla tua esperienza</p>
+                @Html.TextAreaFor(m => m.Consigliato, new { @class = "form-control", @cols = "6", @rows = "5" })
+
+                <span asp-validation-for="Consigliato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <p>Hai qualcosa da sconsigliare inerente alla tua esperienza di viaggio</p>
+                @Html.TextAreaFor(m => m.Sconsigliato, new { @class = "form-control", @cols = "6", @rows = "5" })
+
+                <span asp-validation-for="Sconsigliato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
     </div>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
 

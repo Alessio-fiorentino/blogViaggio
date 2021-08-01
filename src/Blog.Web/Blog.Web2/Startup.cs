@@ -32,8 +32,7 @@ namespace Blog.Web2
 
             // 2. Add a scoped IAsyncDocumentSession. For the sync version, use .AddRavenSession().
             services.AddRavenDbAsyncSession();
-            services.AddScoped<OrderService>();
-            services.AddScoped<CittaService>();
+            
 
             services.AddRazorPages();
         }

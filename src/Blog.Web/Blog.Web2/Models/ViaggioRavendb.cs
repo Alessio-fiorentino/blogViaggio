@@ -2,20 +2,26 @@
 using Raven.Client.Documents.Session;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using static Blog.Web2.Models.ravendb;
+using static Blog.Web2.Models.ViaggioRavendb;
 
 namespace Blog.Web2.Models
 {
-    public class ravendb
+    public class ViaggioRavendb
     {
-        public class Viaggio
-        {
+
+             public string Id { get; set; }
             public string Citta { get; set; }
-            public string Periodo { get; set; }
+
+            [DataType(DataType.Date)]
+            [Required(ErrorMessage = "Il campo è obbligatorio")]
+            public DateTime Periodo { get; set; }
             public string Descrizione { get; set; }
-        }
+            public string Consigliato { get; set; }
+            public string Sconsigliato { get; set; }
+        
 
     }
 
@@ -31,12 +37,14 @@ namespace Blog.Web2.Models
 
         public async Task<int> GetCittaCount()
         {
-            await _session.StoreAsync(new Viaggio { Citta = "Londra" });
+            await _session.StoreAsync(new ViaggioRavendb { Citta = "Londra" });
             await _session.SaveChangesAsync();
             return await _session
-               .Query<Viaggio>()
+               .Query<ViaggioRavendb>()
                .CountAsync();
         }
 
     }
+  
+
 }
