@@ -1,44 +1,63 @@
 ﻿@model Blog.Web2.Models.ViaggioRavendb
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Visualizza";
 }
 
-<h1>Edit</h1>
-
-<h4>Post</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Citta" class="control-label"></label>
-                <input asp-for="Citta" class="form-control" />
-                <span asp-validation-for="Citta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Periodo" class="control-label"></label>
-                <input asp-for="Periodo" class="form-control" />
-                <span asp-validation-for="Periodo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descrizione" class="control-label"></label>
-                <input asp-for="Descrizione" class="form-control" />
-                <span asp-validation-for="Descrizione" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<h1>Details</h1>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <h4>Post</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Città
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Citta)
+        </dd>
+        <dt class="col-sm-2">
+            Data
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Periodo)
+        </dd>
+        <dt class="col-sm-2">
+            Descrizione
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+    </dl>
 </div>
+<div style="text-align:center">
+    <table align="center" cellpadding="20px" style="width:400px">
+        <thead>
+            <tr>
+                <th style="background-color:lawngreen">
+                    Consigliato
+                </th>
+                <th style="background-color:red">
+                    Sconsigliato
+                </th>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="background-color:lawngreen">
+                    @Html.DisplayFor(model => model.Consigliato)
+                </td>
+                <td style="background-color:red">
+                    @Html.DisplayFor(model => model.Sconsigliato)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+<br />
+<p><a asp-action="Cerca">Back to List</a></p>
+

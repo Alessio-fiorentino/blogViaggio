@@ -30,16 +30,17 @@ namespace Blog.Web2.Controllers
             return View(model);
         }
 
-        public ViewResult Cerca (string searchString)
+        public async Task<IActionResult> Cerca (string searchString)
         {
+            var city = from m in _session.Query<ViaggioRavendb>()
+                       select m;
 
-         
-                var model =  _session.Query<ViaggioRavendb>()
-                .Where(i => i.Citta.Contains(searchString))
-                .OrderByDescending(i => i.Periodo)
-                .ToList();
-                return View(model);
-            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                city = city.Where(s => s.Citta.Contains(searchString));
+            }
+
+            return View(await city.ToListAsync());
         }
         public IActionResult CreateRaven()
         {
@@ -62,6 +63,7 @@ namespace Blog.Web2.Controllers
             }
             return View(ravendb);
         }
+       
         public async Task<IActionResult> Visualizza(string id)
         {
             if (id == null)
@@ -69,12 +71,22 @@ namespace Blog.Web2.Controllers
                 return NotFound();
             }
 
-            var visualizza = await _session.LoadAsync<ViaggioRavendb>(id);
-            if (visualizza == null)
-            {
-                return NotFound();
-            }
+            var visualizza = _session.Query<ViaggioRavendb>().FirstOrDefaultAsync(m => m.Id == id);
+
+            
+                if (visualizza == null)
+                {
+                    return NotFound();
+                }
+                return View(visualizza);
+            
             return View(visualizza);
+        }
+
+        public ViewResult VIsual (string id)
+        {
+            var model = _session.LoadAsync<ViaggioRavendb>(id);
+            return View(model);
         }
         public IActionResult Privacy()
         {

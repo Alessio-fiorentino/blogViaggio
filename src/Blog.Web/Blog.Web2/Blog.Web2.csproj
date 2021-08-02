@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Prova\**" />
+    <Content Remove="Views\Prova\**" />
+    <EmbeddedResource Remove="Views\Prova\**" />
+    <None Remove="Views\Prova\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Views\Posts\Index1.cshtml.cs" />
   </ItemGroup>
 
@@ -14,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +33,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="RavenDB.DependencyInjection" Version="4.0.2" />
+    <PackageReference Include="RavenDB.Embedded" Version="5.2.1" />
     <PackageReference Include="RavenMigrations" Version="5.0.0" />
   </ItemGroup>
 
