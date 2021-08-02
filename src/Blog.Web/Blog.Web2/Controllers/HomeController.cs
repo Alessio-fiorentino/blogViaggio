@@ -63,24 +63,33 @@ namespace Blog.Web2.Controllers
             }
             return View(ravendb);
         }
-       
-        public async Task<IActionResult> Visualizza(string id)
+
+        public async Task<IActionResult> Visualizza(string id, ViaggioRavendb viaggio)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var visualizza = _session.Query<ViaggioRavendb>().FirstOrDefaultAsync(m => m.Id == id);
-
             
-                if (visualizza == null)
+         await _session.LoadAsync<ViaggioRavendb>(viaggio.Id);
+            
+
+            if (viaggio.Id == id)
+            {
+                return View(viaggio);
+            }
+          
+            
+                if (viaggio.Id == null)
                 {
                     return NotFound();
                 }
-                return View(visualizza);
-            
-            return View(visualizza);
+
+            return View(viaggio);
+
+
+
+
         }
 
         public ViewResult VIsual (string id)
@@ -99,7 +108,7 @@ namespace Blog.Web2.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
 
-       
     }
 }
