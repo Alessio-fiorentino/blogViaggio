@@ -41,7 +41,14 @@ namespace Blog.Web2.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                city = city.Where(s => s.Citta.Contains(searchString));
+                IRavenQueryable<ViaggioRavendb> results = from viaggio in _session.Query<ViaggioRavendb>()
+                                                where viaggio.Citta.StartsWith(searchString)
+                                                select viaggio;
+                List<ViaggioRavendb> viaggi = await results.ToListAsync();
+
+
+
+                return View(viaggi);
             }
 
             return View(await city.ToListAsync());
