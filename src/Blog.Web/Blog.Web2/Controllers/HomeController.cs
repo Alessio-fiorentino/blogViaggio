@@ -2,14 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
+
 using System.Linq;
 using System.Threading.Tasks;
-using static Blog.Web2.Models.IndexViewModel;
-using static Blog.Web2.Models.ViaggioRavendb;
+using System.Web;
 
 namespace Blog.Web2.Controllers
 {
@@ -22,6 +24,8 @@ namespace Blog.Web2.Controllers
             this._session = dbSession2;
         }
 
+       
+
         public IActionResult Index()
         {
             var model = new ViaggioRavendb();
@@ -29,7 +33,7 @@ namespace Blog.Web2.Controllers
 
             return View(model);
         }
-
+    
         public async Task<IActionResult> Cerca (string searchString)
         {
             var city = from m in _session.Query<ViaggioRavendb>()
@@ -52,6 +56,7 @@ namespace Blog.Web2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       
 
         public async Task<IActionResult> CreateRaven([Bind("Id,Citta,Periodo,Descrizione,Consigliato,Sconsigliato")] ViaggioRavendb ravendb) {
 
@@ -63,35 +68,39 @@ namespace Blog.Web2.Controllers
             }
             return View(ravendb);
         }
-
-        public async Task<IActionResult> Visualizza(string id, ViaggioRavendb viaggio)
+       
+        public async Task<IActionResult> Visualizza(String id)
         {
+
+            var idD = id.UrlDecode();
+         
             if (id == null)
             {
                 return NotFound();
             }
-            
-         await _session.LoadAsync<ViaggioRavendb>(viaggio.Id);
-            
+           
 
-            if (viaggio.Id == id)
-            {
-                return View(viaggio);
-            }
-          
+
+            IRavenQueryable<ViaggioRavendb> query = from viaggio in _session.Query<ViaggioRavendb>()
+                                             where viaggio.Id == idD
+                                                    select viaggio;
+
+            List<ViaggioRavendb> viaggi = await query.ToListAsync();
+
+      
             
-                if (viaggio.Id == null)
+                if (id == null)
                 {
                     return NotFound();
                 }
 
-            return View(viaggio);
+            return View(viaggi[0]);
 
 
 
 
         }
-
+        
         public ViewResult VIsual (string id)
         {
             var model = _session.LoadAsync<ViaggioRavendb>(id);
