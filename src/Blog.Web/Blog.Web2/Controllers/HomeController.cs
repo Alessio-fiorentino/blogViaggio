@@ -71,7 +71,7 @@ namespace Blog.Web2.Controllers
             {
                 await _session.StoreAsync(ravendb);
                 await _session.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Cerca));
             }
             return View(ravendb);
         }
