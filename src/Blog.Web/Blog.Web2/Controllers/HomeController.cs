@@ -18,10 +18,14 @@ namespace Blog.Web2.Controllers
     public class HomeController : Controller
     {
         private readonly IAsyncDocumentSession _session;
+      
+       
+
 
         public HomeController(IAsyncDocumentSession dbSession2)
         {
             this._session = dbSession2;
+           
         }
 
        
@@ -34,24 +38,38 @@ namespace Blog.Web2.Controllers
             return View(model);
         }
     
-        public async Task<IActionResult> Cerca (string searchString)
+        public async Task<IActionResult> Cerca (string currentFilter,string searchString,int? pageNumber)
         {
-            var city = from m in _session.Query<ViaggioRavendb>()
-                       select m;
+            
+            IRavenQueryable<ViaggioRavendb> TutteLeCitta = from m in _session.Query<ViaggioRavendb>()
+                                                        select m;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 3;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                IRavenQueryable<ViaggioRavendb> results = from viaggio in _session.Query<ViaggioRavendb>()
-                                                where viaggio.Citta.StartsWith(searchString)
-                                                select viaggio;
-                List<ViaggioRavendb> viaggi = await results.ToListAsync();
+
+                TutteLeCitta = from viaggio in _session.Query<ViaggioRavendb>()
+                               where viaggio.Citta.StartsWith(searchString)
+                               select viaggio;
+                                               
 
 
-
-                return View(viaggi);
+               
             }
 
-            return View(await city.ToListAsync());
+            
+            return View(await PaginatedList<ViaggioRavendb>.CreateAsync(TutteLeCitta, pageNumber ?? 1, pageSize));
         }
         public IActionResult CreateRaven()
         {
