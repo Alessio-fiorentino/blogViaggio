@@ -15,12 +15,17 @@ namespace Blog.Web2.Models
     {
 
              public string Id { get; set; }
+
+             [Required(ErrorMessage = "Il campo è obbligatorio")]
             public string Citta { get; set; }
+          
 
             [DataType(DataType.Date)]
             [Required(ErrorMessage = "Il campo è obbligatorio")]
             public DateTime Periodo { get; set; }
+            [Required(ErrorMessage = "Il campo è obbligatorio")]
             public string Descrizione { get; set; }
+            
             public string Consigliato { get; set; }
             public string Sconsigliato { get; set; }
         

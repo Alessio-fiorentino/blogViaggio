@@ -1,26 +1,6 @@
-﻿@model Blog.Web2.Models.ViaggioRavendb
-@{
+﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
-
-@inject CittaService ser
-
-<div class="text-center">
-    <div class="jumbotron">
-        <h1 class="display-4">
-            Welcome to RavenDB Dependency Injection
-        </h1>
-        <p class="lead">
-            Here is some sample data loaded from the database:
-            <br />
-            
-            There are <strong>@await ser.GetCittaCount()</strong> orders in the database 😎
-        </p>
-        <hr class="my-4">
-        <p>Setting up Raven dependency injection takes only 2 lines of code.</p>
-        <a class="btn btn-primary btn-lg" href="https://github.com/JudahGabriel/RavenDB.Dependencyinjection#usage" role="button">Learn more</a>
-    </div>
-</div>
-
+<p>Use this page to detail your site's privacy policy.</p>

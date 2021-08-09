@@ -126,15 +126,10 @@ namespace Blog.Web2.Controllers
 
         }
         
-        public ViewResult VIsual (string id)
-        {
-            var model = _session.LoadAsync<ViaggioRavendb>(id);
-            return View(model);
-        }
+      
         public IActionResult Privacy()
         {
-            var modelRaven = new ViaggioRavendb();
-            return View(modelRaven);
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
