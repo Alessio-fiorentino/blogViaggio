@@ -7,59 +7,68 @@
 <h1>Cerca una esperienza di viaggio</h1>
 <form asp-controller="Home" asp-action="Cerca" method="get">
     <p>
-        Città: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]"/>
+        Città: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
         <input type="submit" value="Cerca" />
     </p>
-</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Città
-            </th>
-            <th>
-                Data
-            </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Citta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Periodo)
-                </td>
+                <th>
+                    Città
+                </th>
+                <th>
+                    Data
+                </th>
 
-                <td>
-                    <a asp-action="Visualizza" asp-route-id="@item.Id">Details</a>
-
-                </td>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Citta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Periodo)
+                    </td>
 
-<a asp-action="Cerca"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Cerca"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
+                    <td>
+                        <a asp-action="Visualizza" asp-route-id="@item.Id">Details</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>
+        scegli quanti viaggi vuoi visualizzare ogni pagina
+        <input type="number" name="pageSize" value="@ViewData["CurrentPage"]" />
+        <input type="submit" value="Applica" />
+    </p>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Cerca"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-pageCurrent="@ViewData["CurrentPage"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Cerca"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       asp-route-pageCurrent="@ViewData["CurrentPage"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</form>
+    

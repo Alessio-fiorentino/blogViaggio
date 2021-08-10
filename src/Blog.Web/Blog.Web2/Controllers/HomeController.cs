@@ -38,7 +38,7 @@ namespace Blog.Web2.Controllers
             return View(model);
         }
     
-        public async Task<IActionResult> Cerca (string currentFilter,string searchString,int? pageNumber)
+        public async Task<IActionResult> Cerca (string currentFilter,string searchString,int? pageNumber,int? pageSize,int? pageCurrent)
         {
             
             IRavenQueryable<ViaggioRavendb> TutteLeCitta = from m in _session.Query<ViaggioRavendb>()
@@ -54,7 +54,7 @@ namespace Blog.Web2.Controllers
             }
             ViewData["CurrentFilter"] = searchString;
 
-            int pageSize = 3;
+            
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -62,14 +62,20 @@ namespace Blog.Web2.Controllers
                 TutteLeCitta = from viaggio in _session.Query<ViaggioRavendb>()
                                where viaggio.Citta.StartsWith(searchString)
                                select viaggio;
-                                               
+             }
 
-
-               
+            if (pageSize != null)
+            {
+                pageNumber = 1;
             }
+            else
+            {
+                pageSize = pageCurrent;
+            }
+            ViewData["CurrentPage"]=pageSize;
 
             
-            return View(await PaginatedList<ViaggioRavendb>.CreateAsync(TutteLeCitta, pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<ViaggioRavendb>.CreateAsync(TutteLeCitta, pageNumber ?? 1, pageSize ?? 1));
         }
         public IActionResult CreateRaven()
         {
@@ -112,6 +118,12 @@ namespace Blog.Web2.Controllers
 
             List<ViaggioRavendb> viaggi = await query.ToListAsync();
 
+      
+            
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
             return View(viaggi[0]);
 
