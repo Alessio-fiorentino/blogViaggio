@@ -112,12 +112,6 @@ namespace Blog.Web2.Controllers
 
             List<ViaggioRavendb> viaggi = await query.ToListAsync();
 
-      
-            
-                if (id == null)
-                {
-                    return NotFound();
-                }
 
             return View(viaggi[0]);
 

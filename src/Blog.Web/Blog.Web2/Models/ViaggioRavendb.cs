@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using static Blog.Web2.Models.ViaggioRavendb;
+
 
 namespace Blog.Web2.Models
 {
@@ -57,25 +57,7 @@ namespace Blog.Web2.Models
     }
 
 
-    public class CittaService
-    {
-        private readonly IAsyncDocumentSession _session;
-
-        public CittaService(IAsyncDocumentSession dbSession2)
-        {
-            this._session = dbSession2;
-        }
-
-        public async Task<int> GetCittaCount()
-        {
-            await _session.StoreAsync(new ViaggioRavendb { Citta = "Londra" });
-            await _session.SaveChangesAsync();
-            return await _session
-               .Query<ViaggioRavendb>()
-               .CountAsync();
-        }
-
-    }
+   
   
 
 }
