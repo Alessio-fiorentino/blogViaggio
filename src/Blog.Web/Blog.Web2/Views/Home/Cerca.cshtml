@@ -47,7 +47,7 @@
 
     <p>
         scegli quanti viaggi vuoi visualizzare ogni pagina
-        <input type="number" name="pageSize" value="@ViewData["CurrentPage"]" />
+        <input type="number" min="1" name="pageSize" value="@ViewData["CurrentPage"]" />
         <input type="submit" value="Applica" />
     </p>
 

@@ -75,7 +75,7 @@ namespace Blog.Web2.Controllers
             ViewData["CurrentPage"]=pageSize;
 
             
-            return View(await PaginatedList<ViaggioRavendb>.CreateAsync(TutteLeCitta, pageNumber ?? 1, pageSize ?? 1));
+            return View(await PaginatedList<ViaggioRavendb>.CreateAsync(TutteLeCitta, pageNumber ?? 1, pageSize ?? 5));
         }
         public IActionResult CreateRaven()
         {
